@@ -30,7 +30,7 @@ namespace TollFeeCalculator.Core.Services.Rules.RuleDefinitions
             var hour = date.Hour;
             var minute = date.Minute;
 
-            return hour >= _hourFrom && _hourTo <= hour && minute >= _minuteFrom && minute <= _minuteTo
+            return hour >= _hourFrom && hour <= _hourTo && minute >= _minuteFrom && minute <= _minuteTo
                 ? _tollFee
                 : defaultFee;
         }

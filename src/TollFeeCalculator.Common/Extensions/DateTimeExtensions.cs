@@ -8,9 +8,9 @@ namespace TollFeeCalculator.Common.Extensions
         // TODO: Add documentation
         public static bool IsDayOff(this DateTime date)
         {
-            var isHoliday = new SwedenPublicHoliday().IsWorkingDay(date);
+            var isWorkingDay = new SwedenPublicHoliday().IsWorkingDay(date);
 
-            return isHoliday;
+            return !isWorkingDay;
         }
     }
 }

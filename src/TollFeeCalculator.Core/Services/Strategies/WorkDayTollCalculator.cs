@@ -1,18 +1,13 @@
 ﻿using System;
 using TollFeeCalculator.Common.Extensions;
+using TollFeeCalculator.Core.Services.Rules;
+using TollFeeCalculator.Core.Services.Rules.RuleDefinitions;
 using TollFeeCalculator.Core.Services.Strategies.Interfaces;
 
 namespace TollFeeCalculator.Core.Services.Strategies
 {
     public class WorkDayTollCalculator: ITollCalculator
     {
-        /**
-     * Calculate the total toll fee for one day
-     *
-     * @param vehicle - the vehicle
-     * @param dates   - date and time of all passes on one day
-     * @return - the total toll fee for that day
-     */
         public int GetTollFee(DateTime[] dates)
         {
             DateTime intervalStart = dates[0];
@@ -46,19 +41,21 @@ namespace TollFeeCalculator.Core.Services.Strategies
         {
             if (date.IsDayOff()) return 0;
 
-            int hour = date.Hour;
-            int minute = date.Minute;
+            var rulesExecutor = new TollFeeRulesExecutor();
+            rulesExecutor.AddRule(new FixedHourAndMinutesAreInRangeRule(6, 0, 29, 9))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(6, 30, 59, 16))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(7, 0, 59, 22))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(8, 0, 29, 16))
+                .AddRule(new HourAndMinutesAreInRangeRule(8, 4, 30, 59, 9))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(15, 0, 29, 16))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(15, 30, 59, 22))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(16, 0, 59, 22))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(17, 0, 59, 16))
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(18, 0, 29, 8));
 
-            if (hour == 6 && minute >= 0 && minute <= 29) return 9;
-            if (hour == 6 && minute >= 30 && minute <= 59) return 16;
-            if (hour == 7 && minute >= 0 && minute <= 59) return 22;
-            if (hour == 8 && minute >= 0 && minute < 29) return 16;
-            if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 9;
-            if (hour == 15 && minute >= 0 && minute <= 29) return 16;
-            if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 22;
-            if (hour == 17 && minute >= 0 && minute <= 59) return 16;
-            if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-            return 0;
+            var resultTollFee = rulesExecutor.CalculateFee(date);
+
+            return resultTollFee;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TollFeeCalculator.Core.Services.Strategies
 {
     public class WorkDayTollCalculator: ITollCalculator
     {
-        public int GetTollFee(DateTime[] dates)
+        public int Calculate(DateTime[] dates)
         {
             DateTime intervalStart = dates[0];
             int totalFee = 0;

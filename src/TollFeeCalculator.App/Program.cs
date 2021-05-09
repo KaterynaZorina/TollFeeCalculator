@@ -1,5 +1,6 @@
 ﻿using System;
 using TollFeeCalculator.Core.Models;
+using TollFeeCalculator.Core.Models.Vehicles;
 using TollFeeCalculator.Core.Services.Strategies;
 
 namespace TollFeeCalculator.App
@@ -25,7 +26,7 @@ namespace TollFeeCalculator.App
                 new DateTime(2021, 05, 10, 0, 15, 0),
             };
 
-            var resultFee = tollCalculationContext.GetTollFee(car, dates);
+            var resultFee = tollCalculationContext.CalculateTollFeeForSingleDay(car, dates);
 
             Console.WriteLine($"Result value is: {resultFee}" );
             Console.ReadLine();

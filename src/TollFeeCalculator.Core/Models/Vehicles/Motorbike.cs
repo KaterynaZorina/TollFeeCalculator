@@ -1,11 +1,11 @@
 ﻿using TollFeeCalculator.Core.Enums;
 using TollFeeCalculator.Core.Models.Interfaces;
 
-namespace TollFeeCalculator.Core.Models
+namespace TollFeeCalculator.Core.Models.Vehicles
 {
-    public class Car: IVehicle
+    public class Motorbike: IVehicle
     {
         public VehicleType GetVehicleType()
-            => VehicleType.Regular;
+            => VehicleType.TollFree;
     }
 }

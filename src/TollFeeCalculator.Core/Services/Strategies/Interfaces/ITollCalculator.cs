@@ -4,6 +4,6 @@ namespace TollFeeCalculator.Core.Services.Strategies.Interfaces
 {
     public interface ITollCalculator
     {
-        int GetTollFee(DateTime[] dates);
+        int Calculate(DateTime[] dates);
     }
 }

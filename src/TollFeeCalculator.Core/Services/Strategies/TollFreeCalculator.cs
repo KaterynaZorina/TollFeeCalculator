@@ -5,7 +5,7 @@ namespace TollFeeCalculator.Core.Services.Strategies
 {
     public class TollFreeCalculator: ITollCalculator
     {
-        public int GetTollFee(DateTime[] dates)
+        public int Calculate(DateTime[] dates)
         {
             return 0;
         }

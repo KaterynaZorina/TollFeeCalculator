@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using TollFeeCalculator.Core.Enums;
 using TollFeeCalculator.Core.Models.Interfaces;
 using TollFeeCalculator.Core.Services.Strategies.Interfaces;
@@ -22,7 +23,7 @@ namespace TollFeeCalculator.Core.Services.Strategies
             _tollCalculators = new ConcurrentDictionary<VehicleType, ITollCalculator>(internalDictionary);
         }
 
-        public int GetTollFee(IVehicle vehicle, DateTime[] dates)
+        public int CalculateTollFeeForSingleDay(IVehicle vehicle, DateTime[] dates)
         {
             if (vehicle == null)
             {
@@ -40,6 +41,12 @@ namespace TollFeeCalculator.Core.Services.Strategies
             {
                 return noFeeAmount;
             }
+
+            var groupedDates = dates.GroupBy(d => new {d.Day, d.Month, d.Year}).ToList();
+            if (groupedDates.Count > 1)
+            {
+                throw new ArgumentException($"{nameof(dates)} array must ");
+            }
             
             var vehicleType = vehicle.GetVehicleType();
             var calculatorExists = _tollCalculators.TryGetValue(vehicleType, out var tollCalculator);
@@ -50,7 +57,7 @@ namespace TollFeeCalculator.Core.Services.Strategies
                 return noFeeAmount;
             }
 
-            var resultFee = tollCalculator.GetTollFee(dates);
+            var resultFee = tollCalculator.Calculate(dates);
 
             return resultFee;
         }

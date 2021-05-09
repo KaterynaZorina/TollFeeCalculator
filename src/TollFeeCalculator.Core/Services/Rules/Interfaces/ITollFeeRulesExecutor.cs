@@ -7,5 +7,7 @@ namespace TollFeeCalculator.Core.Services.Rules.Interfaces
         TollFeeRulesExecutor AddRule(IRule rule);
 
         int CalculateFee(DateTime date);
+
+        int RulesCount { get; }
     }
 }

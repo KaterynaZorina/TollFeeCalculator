@@ -8,6 +8,9 @@ namespace TollFeeCalculator.Core.Services.Rules
     {
         private readonly HashSet<IRule> _rules = new HashSet<IRule>();
         
+        public int RulesCount => _rules.Count;
+
+        // TODO: Think that implementation is a struct
         public TollFeeRulesExecutor AddRule(IRule rule)
         {
             if (rule == null)

@@ -4,6 +4,8 @@ namespace TollFeeCalculator.Core.Models.Interfaces
 {
     public interface IVehicle
     {
-        VehicleType GetVehicleType();  
+        VehicleType GetVehicleType();
+
+        public string DisplayName { get; }
     }
 }

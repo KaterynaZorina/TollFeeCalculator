@@ -3,7 +3,7 @@ using TollFeeCalculator.Core.Services.Rules.Interfaces;
 
 namespace TollFeeCalculator.Core.Services.Rules.RuleDefinitions
 {
-    public readonly struct FixedHourAndMinutesAreInRangeRule: IRule
+    public class FixedHourAndMinutesAreInRangeRule: IRule
     {
         private readonly int _hour;
 

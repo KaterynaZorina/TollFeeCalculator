@@ -7,5 +7,7 @@ namespace TollFeeCalculator.Core.Models.Vehicles
     {
         public VehicleType GetVehicleType()
             => VehicleType.TollFree;
+
+        public string DisplayName => "Foreign";
     }
 }

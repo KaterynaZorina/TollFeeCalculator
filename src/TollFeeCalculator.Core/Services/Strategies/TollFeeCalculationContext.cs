@@ -16,13 +16,22 @@ namespace TollFeeCalculator.Core.Services.Strategies
         {
             var internalDictionary = new Dictionary<VehicleType, ITollCalculator>
             {
-                {VehicleType.Regular, new WorkDayTollFeeCalculator()},
-                {VehicleType.TollFree, new DayOffTollFeeCalculator()}
+                {VehicleType.Regular, new RegularTollFeeCalculator()},
+                {VehicleType.TollFree, new TollFeeFreeCalculator()}
             };
             
             _tollCalculators = new ConcurrentDictionary<VehicleType, ITollCalculator>(internalDictionary);
         }
 
+        /// <summary>
+        /// Calculates toll fee for <paramref name="vehicle"/> using <paramref name="dates"/>
+        /// </summary>
+        /// <param name="vehicle">A vehicle which was charged with toll fee</param>
+        /// <param name="dates">An array of dates for calculating toll fee</param>
+        /// <returns>Calculated toll fee</returns>
+        /// <exception cref="ArgumentNullException">Throws an error in case if <paramref name="vehicle"/> or <paramref name="dates"/> are null</exception>
+        /// <exception cref="ArgumentException">Throws an exception in case if <paramref name="dates"/> contain dates with different year, month or day</exception>
+        /// <exception cref="InvalidOperationException">Throws an exception in case if <paramref name="vehicle"/> has type, which can't be handled</exception>
         public int CalculateTollFeeForSingleDay(IVehicle vehicle, DateTime[] dates)
         {
             if (vehicle == null)

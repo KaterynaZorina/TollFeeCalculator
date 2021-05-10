@@ -8,7 +8,7 @@ using Xunit;
 
 namespace TollFeeCalculator.Core.Tests.Services.Strategies
 {
-    public class TollCalculationContextTests
+    public class TollFeeCalculationContextTests
     {
         [Fact]
         public void CalculateTollFeeForSingleDay_VehicleObjectIsNull_ShouldThrowArgumentNullReferenceException()

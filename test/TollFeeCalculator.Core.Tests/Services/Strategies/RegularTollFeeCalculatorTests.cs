@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TollFeeCalculator.Core.Tests.Services.Strategies
 {
-    public class WorkDayTollFeeCalculatorTests
+    public class RegularTollFeeCalculatorTests
     {
         [Fact]
         public void Calculate_InputArrayIsValid_ShouldCalculateFeeAndReturnFiftyThree()
@@ -16,7 +16,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
             const int month = 5;
             const int day = 10;
 
-            var calculator = new WorkDayTollFeeCalculator();
+            var calculator = new RegularTollFeeCalculator();
             var inputDates = new[]
             {
                 new DateTime(year, month, day, 6, 1, 12, 34), // 9 SEK

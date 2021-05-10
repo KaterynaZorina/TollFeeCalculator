@@ -23,7 +23,12 @@ namespace TollFeeCalculator.Core.Services.Rules.RuleDefinitions
             _minuteTo = minuteTo;
             _tollFee = tollFee;
         }
-        
+
+        /// <summary>
+        /// Calculates toll fee for <paramref name="date"/> within specific hour and minutes range
+        /// </summary>
+        /// <param name="date">Input date to check</param>
+        /// <returns>Returns calculated toll fee if <paramref name="date"/> is in rule's hour and minute range, otherwise - returns 0</returns>
         public int GetTollFeeForDate(DateTime date)
         {
             const int defaultFee = 0;

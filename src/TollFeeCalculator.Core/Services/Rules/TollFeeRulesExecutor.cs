@@ -8,9 +8,17 @@ namespace TollFeeCalculator.Core.Services.Rules
     {
         private readonly HashSet<IRule> _rules = new HashSet<IRule>();
         
+        /// <summary>
+        /// Rules count, defined in current executor instance
+        /// </summary>
         public int RulesCount => _rules.Count;
-
-        // TODO: Think that implementation is a struct
+        
+        /// <summary>
+        /// Adds a <paramref name="rule"/> into collection of internal rules
+        /// </summary>
+        /// <param name="rule">Rule to add for later processing by current executor instance</param>
+        /// <returns>Returns current executor instance</returns>
+        /// <exception cref="ArgumentNullException">Throws exception if <paramref name="rule"/> is null</exception>
         public TollFeeRulesExecutor AddRule(IRule rule)
         {
             if (rule == null)
@@ -23,6 +31,11 @@ namespace TollFeeCalculator.Core.Services.Rules
             return this;
         }
 
+        /// <summary>
+        /// Calculates toll fee for <paramref name="date"/> using a set of defined rules
+        /// </summary>
+        /// <param name="date">Date for calculating toll fee</param>
+        /// <returns>Returns toll fee for <paramref name="date"/></returns>
         public int CalculateFee(DateTime date)
         {
             var resultFee = 0;

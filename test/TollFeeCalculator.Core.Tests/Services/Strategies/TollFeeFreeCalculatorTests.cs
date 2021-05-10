@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TollFeeCalculator.Core.Tests.Services.Strategies
 {
-    public class DayOffTollFeeCalculatorTests
+    public class TollFeeFreeCalculatorTests
     {
         [Fact]
         public void Calculate_InputDatesArrayContainsSingleDate_ShouldReturnZeroForAnyInput()
@@ -15,7 +15,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
             const int resultFee = 0;
             
             var inputDates = new[] {new DateTime(2021, 1, 12, 14, 24, 0)};
-            var calculator = new DayOffTollFeeCalculator();
+            var calculator = new TollFeeFreeCalculator();
 
             // Act
 

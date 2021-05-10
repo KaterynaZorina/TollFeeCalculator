@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TollFeeCalculator.Common.Extensions;
 using TollFeeCalculator.Core.Services.Rules;
 using TollFeeCalculator.Core.Services.Rules.RuleDefinitions;
@@ -10,30 +11,37 @@ namespace TollFeeCalculator.Core.Services.Strategies
     {
         public int Calculate(DateTime[] dates)
         {
-            DateTime intervalStart = dates[0];
-            int totalFee = 0;
+            const int maximumFee = 60;
+            const int millisecondsInSec = 1000;
+            const int secondsInMin = 60;
+            const int minutesInHour = 60;
+
+            var orderedDates = dates.OrderBy(d => d).ToList();
+            var lastChargeDate = orderedDates.FirstOrDefault();
+            var totalFee = 0;
             
-            foreach (DateTime date in dates)
+            foreach (var chargeDate in orderedDates)
             {
-                int tempFee = GetTollFee(intervalStart);
-                int nextFee = GetTollFee(date);
+                var previousFee = GetTollFee(lastChargeDate);
+                var nextFee = GetTollFee(chargeDate);
 
-                long diffInMillies = date.Millisecond - intervalStart.Millisecond;
-                long minutes = diffInMillies / 1000 / 60;
+                var intervalBetweenChargesInMs = (chargeDate - lastChargeDate).TotalMilliseconds;
+                var intervalBetweenChargesInMins = intervalBetweenChargesInMs / millisecondsInSec / secondsInMin;
 
-                if (minutes <= 60)
+                if (intervalBetweenChargesInMins <= minutesInHour)
                 {
-                    if (totalFee > 0) totalFee -= tempFee;
-                    if (nextFee >= tempFee) tempFee = nextFee;
-                    totalFee += tempFee;
+                    if (totalFee > 0) totalFee -= previousFee;
+                    if (nextFee >= previousFee) previousFee = nextFee;
+                    totalFee += previousFee;
                 }
                 else
                 {
                     totalFee += nextFee;
+                    lastChargeDate = chargeDate;
                 }
             }
 
-            if (totalFee > 60) totalFee = 60;
+            if (totalFee > maximumFee) totalFee = maximumFee;
             return totalFee;
         }
 
@@ -46,12 +54,12 @@ namespace TollFeeCalculator.Core.Services.Strategies
                 .AddRule(new FixedHourAndMinutesAreInRangeRule(6, 30, 59, 16))
                 .AddRule(new FixedHourAndMinutesAreInRangeRule(7, 0, 59, 22))
                 .AddRule(new FixedHourAndMinutesAreInRangeRule(8, 0, 29, 16))
-                .AddRule(new HourAndMinutesAreInRangeRule(8, 4, 30, 59, 9))
+                .AddRule(new HourAndMinutesAreInRangeRule(8, 14, 30, 59, 9))
                 .AddRule(new FixedHourAndMinutesAreInRangeRule(15, 0, 29, 16))
                 .AddRule(new FixedHourAndMinutesAreInRangeRule(15, 30, 59, 22))
                 .AddRule(new FixedHourAndMinutesAreInRangeRule(16, 0, 59, 22))
                 .AddRule(new FixedHourAndMinutesAreInRangeRule(17, 0, 59, 16))
-                .AddRule(new FixedHourAndMinutesAreInRangeRule(18, 0, 29, 8));
+                .AddRule(new FixedHourAndMinutesAreInRangeRule(18, 0, 29, 9));
 
             var resultTollFee = rulesExecutor.CalculateFee(date);
 

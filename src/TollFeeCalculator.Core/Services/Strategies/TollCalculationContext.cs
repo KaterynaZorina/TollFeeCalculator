@@ -35,26 +35,24 @@ namespace TollFeeCalculator.Core.Services.Strategies
                 throw new ArgumentNullException(nameof(dates));
             }
 
+            var groupedDates = dates.GroupBy(d => new {d.Day, d.Month, d.Year}).ToList();
+            if (groupedDates.Count > 1)
+            {
+                throw new ArgumentException($"{nameof(dates)} array must contain dates with the same year, month and day");
+            }
+
             const int noFeeAmount = 0;
             
             if (dates.Length == 0)
             {
                 return noFeeAmount;
             }
-
-            var groupedDates = dates.GroupBy(d => new {d.Day, d.Month, d.Year}).ToList();
-            if (groupedDates.Count > 1)
-            {
-                throw new ArgumentException($"{nameof(dates)} array must ");
-            }
             
             var vehicleType = vehicle.GetVehicleType();
             var calculatorExists = _tollCalculators.TryGetValue(vehicleType, out var tollCalculator);
-
             if (!calculatorExists)
             {
-                // TODO: Think about this case
-                return noFeeAmount;
+                throw new InvalidOperationException($"Received type of vehicle: {vehicleType} can't be handled");
             }
 
             var resultFee = tollCalculator.Calculate(dates);

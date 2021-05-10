@@ -22,10 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services\Strategies" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\src\TollFeeCalculator.Core\TollFeeCalculator.Core.csproj" />
     </ItemGroup>
 

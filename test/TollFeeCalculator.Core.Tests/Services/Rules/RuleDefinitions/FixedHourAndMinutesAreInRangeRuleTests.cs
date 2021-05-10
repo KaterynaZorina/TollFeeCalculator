@@ -15,7 +15,6 @@ namespace TollFeeCalculator.Core.Tests.Services.Rules.RuleDefinitions
             const int expectedFee = 20;
             
             var inputDate = new DateTime(2021, 5, 15, 15, 23, 0);
-
             var rule = new FixedHourAndMinutesAreInRangeRule(15, 0, 29, expectedFee);
             
             // Act
@@ -35,7 +34,6 @@ namespace TollFeeCalculator.Core.Tests.Services.Rules.RuleDefinitions
             const int expectedFee = 0;
 
             var inputDate = new DateTime(2020, 6, 18, 10, 18, 0);
-            
             var rule = new FixedHourAndMinutesAreInRangeRule(14, 12, 29, expectedFee);
             
             // Act

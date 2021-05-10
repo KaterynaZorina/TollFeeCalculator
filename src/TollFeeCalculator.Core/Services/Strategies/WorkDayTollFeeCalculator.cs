@@ -7,7 +7,7 @@ using TollFeeCalculator.Core.Services.Strategies.Interfaces;
 
 namespace TollFeeCalculator.Core.Services.Strategies
 {
-    public class WorkDayTollCalculator: ITollCalculator
+    public class WorkDayTollFeeCalculator: ITollCalculator
     {
         public int Calculate(DateTime[] dates)
         {

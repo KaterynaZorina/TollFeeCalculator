@@ -3,7 +3,7 @@ using TollFeeCalculator.Core.Models.Interfaces;
 
 namespace TollFeeCalculator.Core.Services.Strategies.Interfaces
 {
-    public interface ITollCalculationContext
+    public interface ITollFeeCalculationContext
     {
         int CalculateTollFeeForSingleDay(IVehicle vehicle, DateTime[] dates);
     }

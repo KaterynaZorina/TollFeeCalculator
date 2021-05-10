@@ -10,7 +10,7 @@ namespace TollFeeCalculator.App
     {
         static void Main(string[] args)
         {
-            var tollCalculationContext = new TollCalculationContext();
+            var tollCalculationContext = new TollFeeCalculationContext();
 
             var car = new Car();
             var dates = new[]

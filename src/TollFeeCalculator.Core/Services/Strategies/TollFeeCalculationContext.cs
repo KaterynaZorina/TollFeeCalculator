@@ -8,16 +8,16 @@ using TollFeeCalculator.Core.Services.Strategies.Interfaces;
 
 namespace TollFeeCalculator.Core.Services.Strategies
 {
-    public class TollCalculationContext: ITollCalculationContext
+    public class TollFeeCalculationContext: ITollFeeCalculationContext
     {
         private readonly ConcurrentDictionary<VehicleType, ITollCalculator> _tollCalculators;
 
-        public TollCalculationContext()
+        public TollFeeCalculationContext()
         {
             var internalDictionary = new Dictionary<VehicleType, ITollCalculator>
             {
-                {VehicleType.Regular, new WorkDayTollCalculator()},
-                {VehicleType.TollFree, new TollFreeCalculator()}
+                {VehicleType.Regular, new WorkDayTollFeeCalculator()},
+                {VehicleType.TollFree, new DayOffTollFeeCalculator()}
             };
             
             _tollCalculators = new ConcurrentDictionary<VehicleType, ITollCalculator>(internalDictionary);

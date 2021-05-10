@@ -15,7 +15,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
         {
             // Arrange
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var inputDates = Array.Empty<DateTime>();
             
             // Act
@@ -34,7 +34,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
         {
             // Arrange
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = Substitute.For<IVehicle>();
 
             // Act
@@ -53,7 +53,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
         {
             // Arrange
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = Substitute.For<IVehicle>();
             var inputDates = new[]
             {
@@ -83,7 +83,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
             
             const int expectedFee = 0;
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = Substitute.For<IVehicle>();
             
             // Act
@@ -118,7 +118,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
             const int month = 5;
             const int day = 10;
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = new Car();
             var inputDates = new[] {new DateTime(year, month, day, hour, minute, 0)};
 
@@ -136,7 +136,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
         {
             // Arrange
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = new Car();
             var inputDates = new[] {new DateTime(2021, 5, 9, 8, 0, 0)};
 
@@ -154,7 +154,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
         {
             // Arrange
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = new Car();
             var inputDates = new[] {new DateTime(2021, 4, 4, 12, 0, 0)};
 
@@ -172,7 +172,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
         {
             // Arrange
             
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = new Emergency();
             var inputDates = new[] {new DateTime(2021, 1, 6, 16, 5, 0)};
 
@@ -194,7 +194,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
             const int month = 5;
             const int day = 10;
 
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = new Car();
             var inputDates = new[]
             {
@@ -225,7 +225,7 @@ namespace TollFeeCalculator.Core.Tests.Services.Strategies
             const int month = 5;
             const int day = 10;
 
-            var calculator = new TollCalculationContext();
+            var calculator = new TollFeeCalculationContext();
             var vehicle = new Car();
             var inputDates = new[]
             {

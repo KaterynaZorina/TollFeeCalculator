@@ -30,19 +30,17 @@ namespace TollFeeCalculator.App
                 Console.WriteLine();
                 
                 var vehicleTypeStr = ((int)vehicleTypeKeyInfo.Key).ToString(CultureInfo.InvariantCulture);
-                
                 if (!Enum.TryParse<VehicleType>(vehicleTypeStr, out var vehicleType))
                 {
                     WriteLineToConsole(ConsoleColor.Red, $"Input vehicle type {vehicleTypeStr} is not a valid vehicle type. Exiting....");
-                    break;
+                    return;
                 }
 
                 var vehicle = VehicleFactory.Create(vehicleType);
-
                 if (vehicle == null)
                 {
                     WriteLineToConsole(ConsoleColor.Red, $"Input vehicle type {vehicleType} wasn't recognized. Exiting....");
-                    break;
+                    return;
                 }
                 
                 Console.WriteLine($"Selected vehicle type is: {vehicle.DisplayName}");
@@ -50,30 +48,26 @@ namespace TollFeeCalculator.App
                 WriteLineToConsole(ConsoleColor.Yellow, "Example: 2021-05-10 00:15:00,2021-05-10 05:15:00,2021-05-10 14:47:00");
 
                 var inputDatesStr = Console.ReadLine();
-
                 if (string.IsNullOrEmpty(inputDatesStr))
                 {
                     WriteLineToConsole(ConsoleColor.Red, "Input string of dates should not be null or empty. Exiting....");
-                    break;
+                    return;
                 }
                 
                 var inputDatesStrArray = inputDatesStr.Split(",");
-
                 var dates = new List<DateTime>(inputDatesStrArray.Length);
-                
                 foreach (var dateStr in inputDatesStrArray)
                 {
-                    if (!DateTime.TryParseExact(dateStr, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+                    var inputDateStr = dateStr.Trim();
+                    if (!DateTime.TryParseExact(inputDateStr, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
                     {
-                        WriteLineToConsole(ConsoleColor.Red, $"Input string of dates has invalid item: {dateStr}. Exiting....");
-                        break;
+                        WriteLineToConsole(ConsoleColor.Red, $"Input string of dates has invalid item: {inputDateStr}. Exiting....");
+                        return;
                     }
-                    
                     dates.Add(date);
                 }
                 
                 var tollCalculationContext = new TollFeeCalculationContext();
-                
                 var datesGroupedByDay = dates
                     .GroupBy(d => new {d.Day, d.Month, d.Year})
                     .ToList();
@@ -81,27 +75,27 @@ namespace TollFeeCalculator.App
                 foreach (var group in datesGroupedByDay)
                 {
                     var datesArray = group.ToArray();
-                
                     var resultFee = tollCalculationContext.CalculateTollFeeForSingleDay(vehicle, datesArray);
-
                     var groupKey = group.Key;
 
                     WriteLineToConsole(ConsoleColor.Green, $"Result toll fee for date: {groupKey.Year}-{groupKey.Month}-{groupKey.Day} is: {resultFee}");
                     Console.WriteLine("---------------------------------------------------------------------");
                 }
                 
-                WriteLineToConsole(ConsoleColor.Cyan, "If you want to exit, please type [x] key. Press any other key to continue");
+                WriteLineToConsole(ConsoleColor.Cyan, "If you want to exit, please press [x] key. Press any other key to continue...");
                 
                 var key = Console.ReadKey();
                 var keyCode = key.Key;
 
                 Console.WriteLine();
-                
-                if (keyCode == ConsoleKey.X)
+
+                if (keyCode != ConsoleKey.X)
                 {
-                    shouldExit = true;
-                    WriteLineToConsole(ConsoleColor.Magenta, "Bye...");
+                    continue;
                 }
+                
+                shouldExit = true;
+                WriteLineToConsole(ConsoleColor.Magenta, "Bye...");
             }
         }
         

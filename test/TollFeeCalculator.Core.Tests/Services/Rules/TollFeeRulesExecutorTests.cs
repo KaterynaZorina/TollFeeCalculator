@@ -10,7 +10,6 @@ namespace TollFeeCalculator.Core.Tests.Services.Rules
 {
     public class TollFeeRulesExecutorTests
     {
-        // TODO: Think that implementation is a struct
         [Fact]
         public void AddRule_InputDataIsNotValid_ShouldThrowArgumentNullOrEmptyException()
         {
